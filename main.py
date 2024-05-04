@@ -1,23 +1,19 @@
 # Programme principal pour jouer au jeu Quixo
-import api
-import quixo
 import argparse
+from quixo_ia import QuixoIA
 
-# Fonction pour démarrer le jeu
 def main():
-    args = quixo.analyser_commande()
-    idul = args.idul
-    if args.parties:
-        parties = api.lister_parties(idul, secret)
-        print(quixo.formater_les_parties(parties))
-    else:
-        id_partie, joueurs, plateau = api.débuter_partie(idul, secret)
-        print(quixo.formater_jeu(joueurs, plateau))
-        while True:
-            origine, direction = quixo.récupérer_le_coup()
-            id_partie, joueurs, plateau = api.jouer_coup(id_partie, origine, direction, idul, secret)
-            print(quixo.formater_jeu(joueurs, plateau))
+    parser = argparse.ArgumentParser(description="Quixo")
+    parser.add_argument("idul", help="IDUL du joueur")
+    parser.add_argument("-p", "--parties", action="store_true", help="Lister les parties existences")
+    parser.add_argument("-a", "--automatique", action="store_true", help="Jouer automatiquement")
+    args = parser.parse_args()
+
+    game = QuixoIA()
+    
+    if args.automatique:
+        # Implémentation du jeu automatique contre l'ordinateur
+        pass
 
 if __name__ == "__main__":
-    secret = "votre-jeton-personnel"  # Remplacez par votre jeton personnel
     main()
